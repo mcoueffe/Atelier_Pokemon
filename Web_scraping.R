@@ -44,8 +44,9 @@ Scan <- function(page){
 # Tibble contenant les informations des Pokémons (3 pages)
 pokemon_tb <- tibble(nom = NULL, prix = NULL, poids = NULL)
 for (page in 1:3){
-  temp <- Scan(page)
+  temp <- Sca
   pokemon_tb <- bind_rows(pokemon_tb, temp)
 }
 pokemon_tb
 
+save(pokemon_tb, file = "pokemon_tb.Rdata")
