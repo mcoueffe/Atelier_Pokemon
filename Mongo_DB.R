@@ -4,6 +4,7 @@ library(tidyverse)
 library(rvest)
 library(jsonlite)
 library(mongolite)
+library(ggplot2)
 
 # ------ MongoDB
 
@@ -16,7 +17,7 @@ m$import(file("pokemon_tb.json"))
 # et des statistiques de base en fonction de chaque capacité, version ou type
 
 # En fonction des capacités
-m$aggregate('[
+stats_par_capacites <- m$aggregate('[
               {
   "$unwind": "$capacites"
   },
@@ -34,7 +35,7 @@ m$aggregate('[
  ]')
 
 # En fonction des types
-m$aggregate('[
+stats_par_types <- m$aggregate('[
               {
   "$unwind": "$Types"
   },
@@ -51,5 +52,21 @@ m$aggregate('[
  }
  ]')
 
+# ------------- Graphiques
+colnames(stats_par_types)[1] <- "id"
+colnames(stats_par_capacites)[1] <- "id"
+
+# *** Sur les type des Pokémon
+# Attaque et défense
+ggplot(stats_par_types, aes(x=Attaque_moy, y=Defense_moy, color = Vitesse_moy)) +
+  geom_text(label=stats_par_types$id,  aes(size = HP_moy))
+
+# Prix et poids
+ggplot(stats_par_types, aes(x=Prix_moy, y=Poids_moy)) +
+  geom_point() +
+  geom_text(label=stats_par_types$id)
 
 
+# *** Sur les capacités des Pokémon
+ggplot(stats_par_capacites, aes(x=Attaque_moy, y=Defense_moy, color = Vitesse_moy)) +
+  geom_text(label=stats_par_capacites$id,  aes(size = HP_moy))
