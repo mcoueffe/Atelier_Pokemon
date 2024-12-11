@@ -59,14 +59,21 @@ colnames(stats_par_capacites)[1] <- "id"
 # *** Sur les type des Pokémon
 # Attaque et défense
 ggplot(stats_par_types, aes(x=Attaque_moy, y=Defense_moy, color = Vitesse_moy)) +
-  geom_text(label=stats_par_types$id,  aes(size = HP_moy))
+  geom_text(label=stats_par_types$id,  aes(size = HP_moy)) +
+  labs(x="Attaque", y="Défense") 
 
 # Prix et poids
 ggplot(stats_par_types, aes(x=Prix_moy, y=Poids_moy)) +
-  geom_point() +
-  geom_text(label=stats_par_types$id)
+  geom_text(label=stats_par_types$id) +
+  labs(x="Prix", y="Poids") 
 
 
 # *** Sur les capacités des Pokémon
 ggplot(stats_par_capacites, aes(x=Attaque_moy, y=Defense_moy, color = Vitesse_moy)) +
-  geom_text(label=stats_par_capacites$id,  aes(size = HP_moy))
+  geom_text(label=stats_par_capacites$id,  aes(size = HP_moy), check_overlap = TRUE) +
+  labs(x="Attaque", y="Défense") 
+
+# Prix et poids
+ggplot(stats_par_capacites, aes(x=Prix_moy, y=Poids_moy)) +
+  geom_text(label=stats_par_capacites$id, check_overlap = TRUE) +
+  labs(x="Prix", y="Poids") 
