@@ -55,4 +55,5 @@ pokemon_tb <- pokemon_tb %>% rowwise() %>%
            Types = Get_info_pokemon(tolower(nom))[[6]])
 pokemon_tb
 
-save(pokemon_tb, file = "pokemon_tb.Rdata")
+
+stream_out(pokemon_tb, con = file("pokemon_tb.json"))

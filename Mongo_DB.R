@@ -16,6 +16,40 @@ m$import(file("pokemon_tb.json"))
 # et des statistiques de base en fonction de chaque capacité, version ou type
 
 # En fonction des capacités
+m$aggregate('[
+              {
+  "$unwind": "$capacites"
+  },
+ {
+ "$group": {
+ "_id": "$capacites",
+ "Prix_moy": { "$avg": "$prix" },
+ "Poids_moy": {"$avg": "$poids"},
+ "HP_moy": {"$avg": "$HP"},
+ "Attaque_moy": {"$avg": "$Attaque"},
+ "Defense_moy": {"$avg": "$Defense"},
+ "Vitesse_moy": {"$avg": "$Vitesse"}
+ }
+ }
+ ]')
+
+# En fonction des types
+m$aggregate('[
+              {
+  "$unwind": "$Types"
+  },
+ {
+ "$group": {
+ "_id": "$Types",
+ "Prix_moy": { "$avg": "$prix" },
+ "Poids_moy": {"$avg": "$poids"},
+ "HP_moy": {"$avg": "$HP"},
+ "Attaque_moy": {"$avg": "$Attaque"},
+ "Defense_moy": {"$avg": "$Defense"},
+ "Vitesse_moy": {"$avg": "$Vitesse"}
+ }
+ }
+ ]')
 
 
 
