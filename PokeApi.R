@@ -46,16 +46,13 @@ Get_info_pokemon <- function(nom_pokemon){
 }
   
 # On renseigne le tibble
-for (i in 1:dim(pokemon_tb)[1]){
-  nom_pokemon <- tolower(pokemon_tb$nom[i])
-  result_function <- Get_info_pokemon(nom_pokemon)
-  pokemon_tb <- pokemon_tb %>% rowwise() %>% 
-    mutate(capacites = result_function[[1]],
-           HP = result_function[[2]],
-           Attaque = result_function[[3]],
-           Defense = result_function[[4]],
-           Vitesse = result_function[[5]],
-           Types = result_function[[6]])
+pokemon_tb <- pokemon_tb %>% rowwise() %>% 
+    mutate(capacites = Get_info_pokemon(tolower(nom))[[1]],
+           HP = Get_info_pokemon(tolower(nom))[[2]],
+           Attaque = Get_info_pokemon(tolower(nom))[[3]],
+           Defense = Get_info_pokemon(tolower(nom))[[4]],
+           Vitesse = Get_info_pokemon(tolower(nom))[[5]],
+           Types = Get_info_pokemon(tolower(nom))[[6]])
+pokemon_tb
 
-}
-head(pokemon_tb)
+save(pokemon_tb, file = "pokemon_tb.Rdata")
